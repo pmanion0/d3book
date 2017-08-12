@@ -1,0 +1,86 @@
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<style type="text/css">
+  div.bar {
+      display: inline-block;
+      width: 20px;
+      height: 75px;   /* We'll override height later */
+      background-color: teal;
+      margin-right: 2px;
+  }
+</style>
+</head>
+
+<body>
+
+<svg width="500" height="500">
+  <rect x="100" y="150" width="100" height="20" fill="red" />
+  <circle cx="100" cy="30" r="10" fill="pink" />
+  <ellipse cx="50" cy="50" rx="20" ry="10" fill="blue" />
+  <circle cx="30" cy="30" r="10" fill="red" />
+  <line x1="10" y1="40" x2="40" y2="10" stroke="purple" stroke-width="10" />
+  <text x="25" y="25" fill="green" font-size="30">WE OUT HERE</text>
+</svg>
+
+<script type="text/javascript">
+  //var dataset = [ 5, 10, 15, 20, 25 ];
+  /*var dataset = [ 25, 7, 5, 26, 11, 8, 25, 14, 23, 19,
+                14, 11, 22, 29, 11, 13, 12, 17, 18, 10,
+                24, 18, 25, 9, 3 ];*/
+  var dataset = [];                         //Initialize empty array
+  for (var i = 0; i < 25; i++) {            //Loop 25 times
+      var newNumber = Math.floor(Math.random() * 30);   //New random number (0-30)
+      dataset.push(newNumber);              //Add new number to array
+  }
+
+  /*d3.select("body").selectAll("p")
+    .data(dataset)
+    .enter()
+    .append("p")
+    .text(function(d) { return "I am value " + d; })
+    .style("color", function(d) {
+      if (d > 15) {
+        return "blue";
+      } else {
+        return "red";
+      }
+    });*/
+
+  d3.select("body").selectAll("p")
+    .data(dataset)
+    .enter()
+    .append("div")
+    .attr("class", "bar")
+    .style("height", function(d) {
+      var barHeight = d * 5;
+      return barHeight + "px";
+    });
+
+  var rowConverter = function(d) {
+    return {
+      Food: d.Food, // no conversion
+      Deliciousness: parseFlow(d.Deliciousness)
+    }
+  }
+
+  d3.csv("delicious.csv", rowConverter, function(data) {
+    console.log(data);
+  });
+
+  console.log("What is good");
+
+</script>
+
+<p>Hello world 1.</p>
+<p>Hello world 2.</p>
+<p>Hello world 3.</p>
+<p>Hello world 4.</p>
+<p>Hello world 5.</p>
+<p>Hello world 6.</p>
+
+</body>
+
+</html>
